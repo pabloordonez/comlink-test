@@ -9,11 +9,10 @@ async function renderPart(drawMandelbrot, xFrom, yFrom, xTo, yTo, width, height,
 
         for (let i = 0; i < colors.length; i += 3)
         {
-            imageData.data[cFrom + i] = colors[i];
-            imageData.data[cFrom + i + 1] = colors[i + 1];
-            imageData.data[cFrom + i + 2] = colors[i + 2];
-            imageData.data[cFrom + i + 3] = 255;
-            cFrom++;
+            imageData.data[cFrom++] = colors[i];
+            imageData.data[cFrom++] = colors[i + 1];
+            imageData.data[cFrom++] = colors[i + 2];
+            imageData.data[cFrom++] = 255;
         }
 
         context.putImageData(imageData, 0, py);

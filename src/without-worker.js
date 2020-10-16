@@ -15,14 +15,14 @@ export function render()
     document.body.appendChild(canvas);
     const context = canvas.getContext('2d');
     const imageData = context.createImageData(width, height);
-    const color = drawMandelbrot(-2, -2, 2, 2, width, height);
+    const colors = drawMandelbrot(-2, -2, 2, 2, width, height);
     let pixelCoords = 0;
 
-    for (let i = 0; i < color.length; i += 3)
+    for (let i = 0; i < colors.length; i += 3)
     {
-        imageData.data[pixelCoords++] = color[i];
-        imageData.data[pixelCoords++] = color[i + 1];
-        imageData.data[pixelCoords++] = color[i + 2];
+        imageData.data[pixelCoords++] = colors[i];
+        imageData.data[pixelCoords++] = colors[i + 1];
+        imageData.data[pixelCoords++] = colors[i + 2];
         imageData.data[pixelCoords++] = 255;
     }
 

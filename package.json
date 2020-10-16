@@ -1,0 +1,14 @@
+{
+  "name": "comlink-test",
+  "version": "1.0.0",
+  "description": "Testing the comlink library.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pablo Ordóñez",
+  "license": "MIT",
+  "dependencies": {
+    "comlink": "^4.3.0"
+  }
+}

@@ -1,0 +1,27 @@
+<html>
+
+<head>
+    <title>Mandelbrot Comlink</title>
+</head>
+
+<body>
+    <script src="src/with-worker.js" type="module"></script>
+    <script src="src/without-worker.js" type="module"></script>
+
+    <div style="position: absolute;">
+        <button id="with-worker">With Worker</button>
+        <button id="without-worker">Without Worker</button>
+    </div>
+
+    <script type="module">
+
+        import { render as renderWithWorker } from "./src/with-worker.js";
+        import { render as renderWithoutWorker } from "./src/without-worker.js";
+
+        document.getElementById("with-worker").addEventListener("click", renderWithWorker);
+        document.getElementById("without-worker").addEventListener("click", renderWithoutWorker);
+
+    </script>
+</body>
+
+</html>

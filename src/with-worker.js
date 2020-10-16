@@ -29,8 +29,8 @@ export async function render()
     canvases.forEach(x => document.body.removeChild(x));
 
     console.time('mandelbrot with web worker');
-    const width = 2000;
-    const height = 2000;
+    const width = 1200;
+    const height = 1200;
     const threads = 4;
     const canvas = document.createElement('canvas');
     canvas.width = width;

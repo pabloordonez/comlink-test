@@ -6,8 +6,8 @@ export function render()
     canvases.forEach(x => document.body.removeChild(x));
 
     console.time('mandelbrot without web worker');
-    const width = 2000;
-    const height = 2000;
+    const width = 1200;
+    const height = 1200;
 
     const canvas = document.createElement('canvas');
     canvas.width = width;

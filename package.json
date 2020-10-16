@@ -4,7 +4,8 @@
   "description": "Testing the comlink library.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prestart": "npm i",
+    "start": "npx serve"
   },
   "author": "Pablo Ordóñez",
   "license": "MIT",

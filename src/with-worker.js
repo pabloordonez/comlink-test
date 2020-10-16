@@ -1,8 +1,6 @@
 import * as Comlink from "./comlink.esm.js";
 
-const drawMandelbrot = Comlink.wrap(new Worker("./src/worker.js", { type: 'module' }));
-
-async function renderPart(xFrom, yFrom, xTo, yTo, width, height, py, context)
+async function renderPart(drawMandelbrot, xFrom, yFrom, xTo, yTo, width, height, py, context)
 {
     return new Promise((resolve) => drawMandelbrot(xFrom, yFrom, xTo, yTo, width, height, Comlink.proxy((colors) =>
     {
@@ -49,7 +47,8 @@ export async function render()
 
     for (let i = 0; i < threads; i++)
     {
-        promises.push(renderPart(xFrom, yFrom, xTo, yFrom + yInc, width, ht, py, context));
+        const drawMandelbrot = Comlink.wrap(new Worker("./src/worker.js", { type: 'module' }));
+        promises.push(renderPart(drawMandelbrot, xFrom, yFrom, xTo, yFrom + yInc, width, ht, py, context));
         yFrom += yInc;
         py += ht;
     }

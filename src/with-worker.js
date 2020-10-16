@@ -2,10 +2,13 @@ import * as Comlink from "./comlink.esm.js";
 
 const drawMandelbrot = Comlink.wrap(new Worker("./src/worker.js", { type: 'module' }));
 
-async function renderPart(xFrom, yFrom, xTo, yTo, width, height, cFrom, imageData)
+async function renderPart(xFrom, yFrom, xTo, yTo, width, height, py, context)
 {
     return new Promise((resolve) => drawMandelbrot(xFrom, yFrom, xTo, yTo, width, height, Comlink.proxy((colors) =>
     {
+        const imageData = context.getImageData(0, py, width, height);
+        let cFrom = 0;
+
         for (let i = 0; i < colors.length; i += 3)
         {
             imageData.data[cFrom + i] = colors[i];
@@ -15,6 +18,7 @@ async function renderPart(xFrom, yFrom, xTo, yTo, width, height, cFrom, imageDat
             cFrom++;
         }
 
+        context.putImageData(imageData, 0, py);
         resolve();
     })));
 }
@@ -33,7 +37,6 @@ export async function render()
     canvas.height = height;
     document.body.appendChild(canvas);
     const context = canvas.getContext('2d');
-    const imageData = context.createImageData(width, height);
     const promises = [];
 
     const xFrom = -2;
@@ -42,17 +45,15 @@ export async function render()
     let yTo = 2;
     let yInc = (yTo - yFrom) / threads;
     let ht = height / threads;
-    let cFrom = 0;
-    let cInc = width * ht * 4;
+    let py = 0;
 
     for (let i = 0; i < threads; i++)
     {
-        promises.push(renderPart(xFrom, yFrom, xTo, yFrom + yInc, width, ht, cFrom, imageData));
+        promises.push(renderPart(xFrom, yFrom, xTo, yFrom + yInc, width, ht, py, context));
         yFrom += yInc;
-        cFrom += cInc;
+        py += ht;
     }
 
     await Promise.all(promises);
-    context.putImageData(imageData, 0, 0);
     console.timeEnd('mandelbrot with web worker');
 }
